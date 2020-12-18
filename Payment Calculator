@@ -1,0 +1,103 @@
+import numpy_financial as npf
+
+def language():
+    while True:
+        try:
+            lang = input("\nPlease select a language to continue (English/German): ").lower()
+            if (lang == "english") or (lang == "englisch"):
+                return 1
+            elif (lang == "german")or (lang == "deutsch"):
+                return 2
+            else:
+                raise Exception
+        except Exception:
+            print("\n\tYou must select either English or German!")
+
+def calculate(price, down, time, interest):
+    yearly_i = interest / 100
+    principal = price - down
+    monthly_p = abs(npf.pmt(yearly_i / 12, time * 12, principal))
+    payment = round(monthly_p, 2)
+    return payment
+
+def get_info():
+    if language() == 1:
+        print('\n\t\t\tWelcome to the Payment Calculator.')
+        while True:
+            try:
+                name = input('\nWhat is your name? \n\t --> ').title()
+                break
+            except Exception:
+                print("\n\tYou must enter a valid name!")
+        print('\nHi {},'.format(name))
+        buy = input('\nWhat would you like to buy? \n\t --> ')
+        print('\nAwesome, a ' + buy + ' would be great!')
+        while True:
+            try:
+                price = eval(input('\nHow much does a ' + buy + ' cost? \n\t --> $ '))
+                break
+            except Exception:
+                print("\n\tYou must enter a valid price!")
+        while True:
+            try:
+                down = eval(input('\nHow much are you willing to put as a down payment? \n\t --> $ '))
+                print('\nOk great, ${} is a good start!'.format(down))
+                break
+            except Exception:
+                print("\n\tYou must enter a valid amount!")
+        while True:
+            try:
+                time = eval(input('\nHow many years would you like to make payments? \n\t --> '))
+                break
+            except Exception:
+                print("\n\tYou must enter a valid number of years!")
+        while True:
+            try:
+                interest = eval(input('What is the interest rate percentage (eg. 2 for 2%)? \n\t --> ')) * 0.01
+                break
+            except Exception:
+                print("\n\tYou must enter a valid number!")
+        payment = calculate(price, down, time, interest)
+        print('\nOk ' + name + ', Your monthly payments will be: $', payment)
+        print('\nEnjoy your new purchase, and thank you for using Payment Calculator.')
+    else:
+        print('\n\t\t\tWillkommen beim Payment Calculator.')
+        while True:
+            try:
+                name = input('\nWie heißt du? \n\t --> ').title()
+                break
+            except Exception:
+                print("\n\tFalsche Eingabe!")
+        print('\nHallo {},'.format(name))
+        buy = input('\nWas würdest du gerne kaufen? \n\t --> ')
+        print('\nSuper, ' + buy + ' wäre toll!')
+        while True:
+            try:
+                price = eval(input('\nWie viel kostet ' + buy + ' \n\t --> € '))
+                break
+            except Exception:
+                print("\n\tFalsche Eingabe!")
+        while True:
+            try:
+                down = eval(input('\nWie viel wärst du bereit anzuzahlen? \n\t --> € '))
+                print('\nOk, €{} ist ein guter Anfang!'.format(down))
+                break
+            except Exception:
+                print("\n\tFalsche Eingabe!")
+        while True:
+            try:
+                time = eval(input('\nWie viele Jahre würdest du Zahlungen machen wollen? \n\t --> '))
+                break
+            except Exception:
+                print("\n\tFalsche Eingabe!")
+        while True:
+            try:
+                interest = eval(input('Wie hoch sind die Zinsen in Prozent (zb. 2 für 2%)? \n\t --> ')) * 0.01
+                break
+            except Exception:
+                print("\n\tFalsche Eingabe!")
+        payment = calculate(price, down, time, interest)
+        print('\nOk ' + name + ', deine monatlichen Zahlungen belaufen sich auf: €', payment)
+        print('\nDanke, dass du Payment Calculator benutzt hast.')
+
+get_info()
